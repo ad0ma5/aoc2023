@@ -68,6 +68,7 @@ func main() {
 	///// Extract dat
 	lri:=""
 	nodes:=[]node{}
+	smap:=map[string]string{}
 	for li:=0;li<l;li++{
 	  if l_arr[li] == "" { continue }
 	  if li == 0 {
@@ -84,10 +85,15 @@ func main() {
 	  dlro:=node{d:nid,l:nl,r:nr}
 	  nodes=append(nodes,dlro)
 	  fmt.Println(" .d ",dlro)
+          smap[nid+"L"] = nl
+          smap[nid+"R"] = nr
+
 
           }
 
 	}
+	//fmt.Println(smap)
+	//os.Exit(3)
 
 	//Action
 	cnod:=0
@@ -114,7 +120,8 @@ func main() {
 	    endz:=true
 	    for di:=0;di<len(dest_arr);di++{
 
-	      ndi:=gonext(dest_arr[di],gt,nodes)
+	      //ndi:=gonext(dest_arr[di],gt,nodes)
+	      ndi:=smap[dest_arr[di]+string(gt)]
               dest_arr[di]=ndi
 	      if string(ndi[len(ndi)-1]) != "Z"{
 	        endz=false
@@ -123,9 +130,9 @@ func main() {
 	//	break
 	      }
 	    }
-		if cnod%1000000 ==0{
-	        fmt.Println(" z "," c ",cnod," ", dest_arr )
-	        }
+		//if cnod%1000000 ==0{
+	        //fmt.Println(" z "," c ",cnod," ", dest_arr )
+	        //}
 	    //fmt.Println(dest_arr)
 	    //if cnod > 100 {
 	      //break

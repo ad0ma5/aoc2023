@@ -16,6 +16,22 @@ type dot struct {
   n int
 }
 
+func iscross(d1 dot, d2 dot, cross dot) bool {
+  if d1.x < cross.x && cross.x  < d2.x {
+    return true
+  }
+  if d1.y < cross.y  && cross.y < d2.y {
+    return true
+  }
+  if d1.x > cross.x && cross.x  > d2.x {
+    return true
+  }
+  if d1.y > cross.y  && cross.y > d2.y {
+    return true
+  }
+  return false
+}
+
 func dotdiff(d1 dot, d2 dot) dot {
   d:=dot{}
   d.x=d1.x-d2.x
@@ -34,8 +50,8 @@ func dotlen(d dot ) int{
 
 func main() {
   fmt.Println("Hello, day11.go!")
-  //data, err := os.ReadFile("input11.txt")
-  data, err := os.ReadFile("input11s.txt")
+  data, err := os.ReadFile("input11.txt")
+  //data, err := os.ReadFile("input11s.txt")
   if err != nil {
 	log.Fatal(err)
   }
@@ -120,7 +136,33 @@ func main() {
   for id, dsi:= range ds {
     for dsiind:=id+1;dsiind<len(ds);dsiind++ {
       res:=dotlen(dotdiff(dsi, ds[dsiind]))
+      crossdot:=dot{x:7,y:3}
+      crosc:=0
+      for xhi, xh := range yhassharp {
+	if !xh {
+	  crossdot=dot{x:xhi, y:0}
+	  fmt.Println("x",dsi,ds[dsiind],crossdot)
+          if iscross(dsi, ds[dsiind], crossdot){
+	    fmt.Println("is cross x",dsi,ds[dsiind],crossdot)
+	    crosc++
+          }
+	}
+      }
+      for yhi, yh := range xhassharp {
+	if !yh {
+	  crossdot=dot{x:0,y:yhi}
+	  fmt.Println("y",dsi,ds[dsiind],crossdot)
+          if iscross(dsi, ds[dsiind], crossdot){
+	    fmt.Println("is cross y",dsi,ds[dsiind],crossdot)
+	    crosc++
+          }
+	}
+      }
+
       //check d1x < *x < d2x or d1y < *y < d2y and then multiply tiles needed number of expanding plains crossed
+      fmt.Println("ttt",crosc)
+      expandno:=1000000
+      res=res-crosc+(crosc*expandno)
       total+=res
       fmt.Println(" r=",res, " id1=", id+1, " id2=",dsiind+1)
 
