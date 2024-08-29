@@ -60,7 +60,7 @@ func main() {
 	//data, err := os.ReadFile("input8_small1.txt")
 	//data, err := os.ReadFile("input8_smallp2.txt")
 	if err != nil {
-		log.Fatal(err)
+	  log.Fatal(err)
 	}
 	str:=string(data);
 	l_arr:=strings.Split(str, "\n")
